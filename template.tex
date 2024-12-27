@@ -1,14 +1,26 @@
 \documentclass[11pt,a4paper]{book}
+
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath, amssymb}
+\usepackage{amsmath, amssymb, amsthm}
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsthm}
 \usepackage{geometry}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{caption}
+\pgfplotsset{compat=1.18}
+
+
 \geometry{a4paper, total={171mm,257mm}, left=20mm, top=20mm}
 \title{Solution to Apostol's Calculus}
 \author{songyuncen}
 \date{2024.12.26}
+
+\theoremstyle{definition}
 \newtheorem{exercise}{Exercise}
 \newtheorem{solution}{Solution}
+
 \begin{document}
 \maketitle
 \chapter*{I. INTRODUCTION}
@@ -16,18 +28,170 @@
 \section*{Part 1. Historical Introduction}
 \subsection*{I 1.4 Exercises}
 
+% 1 
+
 \begin{exercise}
-  Modify the region in Figure I.3 by assuming that the ordinate at each $x$  is $2x^2$ instead of $x^2$.
+  \textbf{(a)} Modify the region in Figure I.3 by assuming that the ordinate at each $x$  is $2x^2$ instead of $x^2$.
   Draw the new figure. Check through the principal steps in the foregoing section and 
   find what effect this has on the calculation of the area. Do the same if the ordinate
-  at each $x$ is (b) $3x^2$, (c) $\frac{1}{4}x^2$, (d) $2x^2 + 1$, (e) $ax^2 + c$.
+  at each $x$ is \textbf{(b)} $3x^2$, \textbf{(c)} $\frac{1}{4}x^2$, \textbf{(d)} $2x^2 + 1$, \textbf{(e)} $ax^2 + c$.
 \end{exercise}
 
-\begin{solution}
+\begin{solution}{\ \\}
+  \textbf{(a)}
+  % draw
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          xlabel=$x$,
+          ylabel=$y$,
+          xmin=0,
+          xmax=100,
+          ymin=0,
+          domain=0:100,
+          samples=100,
+          smooth,
+          no markers,
+          grid=major
+        ]
+        \addplot[thick, blue] {2*x^2};
+      \end{axis}
+    \end{tikzpicture}
+    \caption*{Graph of $f(x)=2x^2$ from 0 to 100}
+  \end{figure}
+  % caculation
+  The sum of the areas of all the outer rectangles is
+  \[
+  S_n = \frac{2b^3}{n^3} \left( 1^2 + 2^2 + \cdots + n^2 \right) 
+  \]
+  and the sum of the areas of all the inner rectangles is
+  \[
+  s_n = \frac{2b^3}{n^3} \left( 1^2 + 2^2 + \cdots + (n-1)^2 \right)
+  \].
+
+  From identity
+  \[
+  \tag{I.3} 1^2 + 2^2 + \cdots + n^2 = \frac{n^3}{3} + \frac{n^2}{2} + \frac{n}{6}
+  \]
+  we have the inequalities
+  \[
+  \tag{I.5} 1^2 + 2^2 + \cdots + (n-1)^2 < \frac{n^3}{3} < 1^2 + 2^2 + \cdots + n^2.
+  \]
+
+  
+  If we multiply both sides of (I.5) by $2b^3/n^3$ and make use of the equations of sum of areas, we get
+  \[
+  s_n < \frac{2b^3}{3} < S_n \tag{1}
+  \]
+  for every $n$. We already know the area $A$ of the graph is between $s_n$ and $S_n$, so if we can 
+  show that $2b^3/3$ is the only number which lies between $s_n$ and $S_n$ for every $n$, we can conclude that $A = 2b^3/3$.
+
+  There are only three conditions for an a number $B$ which satisfied $s_n < B < S_n$: $B > 2b^3/3$, $B < 2b^3/3$, and $B = 2b^3/3$.
+
+  If $B > 2b^3/3$, we add $\frac{2b^3}{n^3}n^2$ to left side and middle side of (1) to get
+  \[
+  s_n + \frac{2b^3}{n^3}n^2 < \frac{2b^3}{3} + \frac{2b^3}{n^3}n^2
+  \]
+  which is equivalent to
+  \[
+  B < S_n < \frac{2b^3}{3} + \frac{2b^3}{n}.
+  \]
+  Since $B - 2b^3/3 > 0$, we get
+  \[
+  n < \frac{2b^3}{B - 2b^3/3}.
+  \]
+  for every integr $n \ge 1$. This is impossible, so $B > 2b^3/3$ is false.
+
+  If $B < 2b^3/3$, we substract $\frac{2b^3}{n^3}n^2$ from right side and middle side of (1) to get
+  \[
+  \frac{2b^3}{3} - \frac{2b^3}{n^3}n^2 < Sn - \frac{2b^3}{n^3}n^2
+  \]
+  which is equivalent to
+  \[
+  \frac{2b^3}{3} - \frac{2b^3}{n} < s_n < B.
+  \]
+  Since $2b^3/3 - B > 0$, we get
+  \[
+  n < \frac{2b^3}{2b^3/3 - B}.
+  \]
+  for every integr $n \ge 1$. This is impossible, so $B < 2b^3/3$ is false.
+
+  Therefore, $2b^3/3$ is the only number which lies between $s_n$ and $S_n$ for every $n$.
+
+  \vspace{2\baselineskip}
+  \textbf{(b), (c)} The results are similar to (a). The area of the graph is $b^3$ and $\frac{b^3}{12}$ respectively.
+
+  \vspace{2\baselineskip}
+  \textbf{(d)} The area of one outer rectangle is
+  \[
+  \left( \frac{b}{n} \right) \left( 2 \left( \frac{kb}{n} \right)^2 + 1 \right) = \frac{2b^3}{n^3}k^2 + \frac{b}{n}
+  \]
+
+  The sum of the areas of all the outer rectangles is
+  \[
+    S_n = \frac{2b^3}{n^3} \left( 1^2 + 2^2 + \cdots + n^2 \right) + b.
+  \]
+
+  The sum of the areas of all the inner rectangles is
+  \[
+    s_n = \frac{2b^3}{n^3} \left( 1^2 + 2^2 + \cdots + (n-1)^2 \right) + \frac{(n-1)b}{n}.
+  \]
+
+  From inequalities (I.5) we have
+  \[
+  \frac{2b^3}{n^3} \left(1^2 + 2^2 + \cdots + (n-1)^2 \right) < \frac{2b^3}{3} < \frac{2b^3}{n^3} \left( 1^2 + 2^2 + \cdots + n^2 \right).
+  \]
+  Add $b$ to both sides of the inequality, we get
+  \[
+  s_n < \frac{2b^3}{n^3}\left( 1^2 + 2^2 + \cdots + (n-1)^2 \right) + b < \frac{2b^3}{3} + b < S_n.
+  \]
+  Which is equivalent to
+  \[
+  s_n < \frac{2b^3}{3} + b < S_n. \tag{2}
+  \]
+
+  for every $n \ge 1$. We already know the area $A$ of the graph is between $s_n$ and $S_n$, so if we can 
+  show that $2b^3/3 + b$ is the only number which lies between $s_n$ and $S_n$ for every $n$, we can conclude that $A = 2b^3/3 + b$.
+
+  There are only three conditions for an a number $B$ which satisfied $s_n < B < S_n$: $B > 2b^3/3 + b$, $B < 2b^3/3 + b$, and $B = 2b^3/3 + b$.
+
+  If $B > 2b^3/3 + b$, we add $\frac{2b^3}{n^3}n^2 + \frac{b}{n}$ to left side and middle side of (2) to get
+  \[
+  s_n + \frac{2b^3}{n^3}n^2 + \frac{b}{n} < \frac{2b^3}{3} + b + \frac{2b^3}{n^3}n^2 + \frac{b}{n}
+  \]
+  which is equivalent to
+  \[
+  B < S_n < \frac{2b^3}{3} + b + \frac{2b^3 + b}{n}.
+  \]
+  Since $B - 2b^3/3 - b > 0$, we get
+  \[
+  n < \frac{2b^3 + b}{B - 2b^3/3 - b}.
+  \]
+  for every integr $n \ge 1$. This is impossible, so $B > 2b^3/3 + b$ is false.
+
+  If $B < 2b^3/3 + b$, we substract $\frac{2b^3}{n^3}n^2 + \frac{b}{n}$ from right side and middle side of (2) to get
+  \[
+  \frac{2b^3}{3} + b - \frac{2b^3}{n^3}n^2 - \frac{b}{n} < Sn - \frac{2b^3}{n^3}n^2 - \frac{b}{n}
+  \]
+  which is equivalent to
+  \[
+  \frac{2b^3}{3} + b - \frac{2b^3}{n} - \frac{b}{n} < s_n < B.
+  \]
+  Since $2b^3/3 + b - B > 0$, we get
+  \[
+  n < \frac{2b^3 + b}{2b^3/3 + b - B}.
+  \]
+  for every integr $n \ge 1$. This is impossible, so $B < 2b^3/3 + b$ is false.
+
+  Therefore, $2b^3/3 + b$ is the only number which lies between $s_n$ and $S_n$ for every $n$.
+
+  \vspace{2\baselineskip}
+  \textbf{(e)} The result are similar to (d). The area of the graph is $ab^3 + cb$.
 \end{solution}
 \vrule
 
-% -----------------------------------------------------
+% 2
 
 \begin{exercise}\label{ex:1}
   Modify the region in Figure I.3 by assuming that the ordinate at each $x$ is $x^3$ instead of $x^2$.
@@ -52,7 +216,7 @@
 \end{solution}
 \vrule
 
-% -----------------------------------------------------
+% 3 
 
 \begin{exercise}
   The inequalities (I.5) and (I.12) are special cases of the more general inequalities
