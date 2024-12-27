@@ -13,7 +13,7 @@
 
 
 \geometry{a4paper, total={171mm,257mm}, left=20mm, top=20mm}
-\title{Solution to Apostol's Calculus}
+\title{My Exercise Solution to Apostol's Calculus}
 \author{songyuncen}
 \date{2024.12.26}
 
@@ -87,7 +87,7 @@
   for every $n$. We already know the area $A$ of the graph is between $s_n$ and $S_n$, so if we can 
   show that $2b^3/3$ is the only number which lies between $s_n$ and $S_n$ for every $n$, we can conclude that $A = 2b^3/3$.
 
-  There are only three conditions for an a number $B$ which satisfied $s_n < B < S_n$: $B > 2b^3/3$, $B < 2b^3/3$, and $B = 2b^3/3$.
+  There are only three conditions for a number $B$ which satisfied $s_n < B < S_n$: $B > 2b^3/3$, $B < 2b^3/3$, and $B = 2b^3/3$.
 
   If $B > 2b^3/3$, we add $\frac{2b^3}{n^3}n^2$ to left side and middle side of (1) to get
   \[
@@ -154,7 +154,7 @@
   for every $n \ge 1$. We already know the area $A$ of the graph is between $s_n$ and $S_n$, so if we can 
   show that $2b^3/3 + b$ is the only number which lies between $s_n$ and $S_n$ for every $n$, we can conclude that $A = 2b^3/3 + b$.
 
-  There are only three conditions for an a number $B$ which satisfied $s_n < B < S_n$: $B > 2b^3/3 + b$, $B < 2b^3/3 + b$, and $B = 2b^3/3 + b$.
+  There are only three conditions for a number $B$ which satisfied $s_n < B < S_n$: $B > 2b^3/3 + b$, $B < 2b^3/3 + b$, and $B = 2b^3/3 + b$.
 
   If $B > 2b^3/3 + b$, we add $\frac{2b^3}{n^3}n^2 + \frac{b}{n}$ to left side and middle side of (2) to get
   \[
@@ -189,11 +189,10 @@
   \vspace{2\baselineskip}
   \textbf{(e)} The result are similar to (d). The area of the graph is $ab^3 + cb$.
 \end{solution}
-\vrule
 
 % 2
 
-\begin{exercise}\label{ex:1}
+\begin{exercise}\label{ex:2}
   Modify the region in Figure I.3 by assuming that the ordinate at each $x$ is $x^3$ instead of $x^2$.
   Draw the new figure.
 
@@ -213,8 +212,69 @@
 \end{exercise}
 
 \begin{solution}
+  \textbf{(a)}
+    % draw
+    \begin{figure}[H]
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[
+            xlabel=$x$,
+            ylabel=$y$,
+            xmin=0,
+            xmax=100,
+            ymin=0,
+            domain=0:100,
+            samples=100,
+            smooth,
+            no markers,
+            grid=major
+          ]
+          \addplot[thick, blue] {x^3};
+        \end{axis}
+      \end{tikzpicture}
+      \caption*{Graph of $f(x)=x^3$ from 0 to 100}
+    \end{figure}
+
+  \vspace{2\baselineskip}
+  \textbf{(b)}
+  Multiply the both side of inequalities (I.12) by $b^4/n^4$ and we get
+  \[
+  s_n < \frac{b^4}{4} < S_n
+  \]
+  for every $n$. We already know the area $A$ of the graph is between $s_n$ and $S_n$, so if we can
+  show that $b^4/4$ is the only number which lies between $s_n$ and $S_n$ for every $n$, we can conclude that $A = b^4/4$.
+
+  There are only three conditions for a number $B$ which satisfied $s_n < B < S_n$: $B > b^4/4$, $B < b^4/4$, and $B = b^4/4$.
+
+  If $B > b^4/4$, we add $\frac{b^4}{n^4}n^3$ to left side and middle side of the inequality (I.12) to get
+  \[
+  B < S_n < \frac{b^4}{4} + \frac{b^4}{n}.
+  \]
+  Since $B - b^4/4 > 0$, we get
+  \[
+  n < \frac{b^4}{B - b^4/4}
+  \]
+  for every integr $n \ge 1$. This is impossible, so $B > b^4/4$ is false.
+
+  If $B < b^4/4$, we substract $\frac{b^4}{n^4}n^3$ from right side and middle side of the inequality (I.12) to get
+  \[
+  \frac{b^4}{4} - \frac{b^4}{n^4}n^3 < S_n - \frac{b^4}{n^4}n^3 = s_n < B.
+  \]
+  Since $b^4/4 - B > 0$, we get
+  \[
+  n < \frac{b^4}{b^4/4 - B}
+  \]
+  for every integr $n \ge 1$. This is impossible, so $B < b^4/4$ is false.
+
+  Therefore, $b^4/4$ is the only number which lies between $s_n$ and $S_n$ for every $n$.
+
+  \vspace{2\baselineskip}
+  \textbf{(c)}
+  The problem is similar to Exercise \ref{ex:2}.(e), and the result is
+  \[
+  \frac{ab^4}{4} + cb.
+  \]
 \end{solution}
-\vrule
 
 % 3 
 
@@ -227,6 +287,11 @@
 \end{exercise}
 
 \begin{solution}
+  The more genreal result of Exercise \ref{ex:2} is that: the area below the region of 
+  graph specified by $ax^k + c$ between the interval of $0$ and $b$ is 
+  \[
+  \frac{ab^{k+1}}{k+1} + bc.
+  \]
 \end{solution}
 
 \end{document}
